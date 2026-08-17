@@ -6,12 +6,12 @@ A persistent interval reminder and task tracking Telegram bot designed to keep y
 
 ## 🌟 Key Features
 
-* ⏰ **10-Minute Reminder Cycle:** Sends high-priority reminder messages every 10 minutes (or 1 minute in Fast Test Mode).
+* ⏰ **20-Minute Reminder Cycle:** Sends high-priority reminder messages every 20 minutes (or 1 minute in Fast Test Mode).
 * 🚨 **Persistent 3-Minute Nagging Loop:** If you don't acknowledge the reminder by tapping **"DONE"**, the bot alerts you every 3 minutes until you tap DONE.
 * 🎛️ **Interactive Inline Dashboard:** Control everything using inline buttons directly inside Telegram:
   * `[ ✅ DONE ]` — Acknowledges task and resets the next interval.
   * `[ ⏸ Pause / ▶️ Resume ]` — Pause or resume reminders at any time.
-  * `[ ⚡ Fast Test Mode: ON/OFF ]` — Toggles between 10m/3m and 1m/15s test intervals.
+  * `[ ⚡ Fast Test Mode: ON/OFF ]` — Toggles between 20m/3m and 1m/15s test intervals.
   * `[ 🔔 Trigger Now ]` — Test trigger an alert immediately.
   * `[ 🔄 Refresh Status ]` — Update the dashboard in real-time.
 * 💾 **Persistent Multi-User State:** Powered by SQLite — timers and settings automatically resume even across bot or server restarts.

@@ -26,7 +26,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Interval Configurations (in seconds)
-NORMAL_BASE_SECONDS = 10 * 60  # 10 minutes
+NORMAL_BASE_SECONDS = 20 * 60  # 20 minutes
 NORMAL_NAG_SECONDS = 3 * 60    # 3 minutes
 
 TEST_BASE_SECONDS = 60         # 1 minute (Test Mode)
@@ -120,7 +120,7 @@ def get_all_active_users():
 def get_dashboard_keyboard(state: dict) -> InlineKeyboardMarkup:
     """Builds interactive inline keyboard for the dashboard."""
     status_label = "⏸ Pause Reminders" if state["is_enabled"] else "▶️ Resume Reminders"
-    test_label = "⚡ Test Mode: ON (1m/15s)" if state["is_test_mode"] else "⚡ Test Mode: OFF (10m/3m)"
+    test_label = "⚡ Test Mode: ON (1m/15s)" if state["is_test_mode"] else "⚡ Test Mode: OFF (20m/3m)"
 
     keyboard = [
         [InlineKeyboardButton("✅ DONE", callback_data="action_done")],
@@ -138,7 +138,7 @@ def format_dashboard_text(state: dict) -> str:
     """Generates formatted status overview markdown."""
     status_str = "🟢 Reminders Active" if state["is_enabled"] else "🔴 Reminders Paused"
     state_str = "🚨 Nagging Mode Active" if state["is_nagging"] else "⏳ Waiting for Interval"
-    mode_str = "Fast Test Mode (1m base / 15s nag)" if state["is_test_mode"] else "Normal Mode (10m base / 3m nag)"
+    mode_str = "Fast Test Mode (1m base / 15s nag)" if state["is_test_mode"] else "Normal Mode (20m base / 3m nag)"
 
     last_done_val = state.get("last_done_time")
     if last_done_val:
@@ -233,7 +233,7 @@ def schedule_reminder(user_id: int, chat_id: int, is_nag: bool = False, delay_se
             else:
                 update_user_data(user_id, nag_count=0)
                 text = (
-                    "⏰ *10-Minute Task Reminder!*\n"
+                    "⏰ *20-Minute Task Reminder!*\n"
                     "Time to take action! Please complete your task and tap *DONE*."
                 )
 
@@ -345,7 +345,7 @@ async def test_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     update_user_data(user.id, is_test_mode=new_mode)
     if state["is_enabled"]:
         schedule_reminder(user.id, chat_id, is_nag=False)
-    mode_text = "ENABLED (1m base / 15s nag)" if new_mode else "DISABLED (10m base / 3m nag)"
+    mode_text = "ENABLED (1m base / 15s nag)" if new_mode else "DISABLED (20m base / 3m nag)"
     await update.message.reply_text(f"⚡ Fast Test Mode is now *{mode_text}*.", parse_mode="Markdown")
 
 
@@ -376,7 +376,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "• `/test` - Toggle 1m/15s fast test mode\n"
         "• `/trigger` - Manually trigger an alert immediately\n\n"
         "⚙️ *How it works:*\n"
-        "1. Sends a reminder every 10 minutes (or 1 min in Test Mode).\n"
+        "1. Sends a reminder every 20 minutes (or 1 min in Test Mode).\n"
         "2. If not acknowledged within 3 minutes (or 15 sec), sends nagging alerts every 3 minutes until you tap DONE."
     )
     await update.message.reply_text(help_text, parse_mode="Markdown")
